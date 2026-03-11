@@ -18,7 +18,7 @@ function App() {
           </Routes>
         </main>
         <footer className="mt-8 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-          <p>WorkHours Calculator · Designed by Vinit Pawar</p>
+          <p>WorkHours Calculator</p>
           <p>Copyright © 2026 WorkHours Calculator. All rights reserved.</p>
         </footer>
       </div>
