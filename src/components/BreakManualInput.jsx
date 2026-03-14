@@ -1,4 +1,4 @@
-import { formatMinutesHM } from '../utils/timeUtils.js'
+import { formatMinutesHM } from '../utils/timeUtils.js';
 
 export default function BreakManualInput({
   active,
@@ -9,14 +9,19 @@ export default function BreakManualInput({
   totalMinutes,
   onActivate,
 }) {
-  let newMinutesInput
+  let newMinutesInput;
+
+  const handleQuickAdd = (minutes) => {
+    if (!active) return;
+    onAdd(minutes);
+  };
 
   const handleAdd = (e) => {
-    e.preventDefault()
-    if (!newMinutesInput?.value) return
-    onAdd(newMinutesInput.value)
-    newMinutesInput.value = ''
-  }
+    e.preventDefault();
+    if (!newMinutesInput?.value) return;
+    onAdd(newMinutesInput.value);
+    newMinutesInput.value = '';
+  };
 
   return (
     <div className={`card p-4 sm:p-5 ${!active ? 'opacity-70' : ''}`}>
@@ -40,7 +45,28 @@ export default function BreakManualInput({
         </button>
       </div>
 
-      <form onSubmit={handleAdd} className="mt-4 flex flex-wrap items-end gap-3">
+      <div className="mt-3 flex flex-wrap gap-2">
+        {[5, 10, 15, 20].map((m) => (
+          <button
+            key={m}
+            type="button"
+            disabled={!active}
+            onClick={() => handleQuickAdd(m)}
+            className={`chip border text-[11px] font-semibold transition-colors ${
+              active
+                ? 'border-brand-200 bg-brand-50 text-brand-700 hover:border-brand-400 dark:border-brand-500/50 dark:bg-brand-500/10 dark:text-brand-100'
+                : 'border-slate-200 text-slate-400 dark:border-slate-700 dark:text-slate-600'
+            }`}
+          >
+            +{m} min
+          </button>
+        ))}
+      </div>
+
+      <form
+        onSubmit={handleAdd}
+        className="mt-4 flex flex-wrap items-end gap-3"
+      >
         <div>
           <span className="label-text mb-1 block">New break (minutes)</span>
           <input
@@ -50,7 +76,7 @@ export default function BreakManualInput({
             inputMode="numeric"
             pattern="[0-9]*"
             ref={(el) => {
-              newMinutesInput = el
+              newMinutesInput = el;
             }}
             disabled={!active}
             className="input-field w-32"
@@ -113,6 +139,5 @@ export default function BreakManualInput({
         )}
       </div>
     </div>
-  )
+  );
 }
-
